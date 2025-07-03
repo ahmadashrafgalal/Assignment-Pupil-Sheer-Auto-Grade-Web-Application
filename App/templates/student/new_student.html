@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com --> 
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <title>Template</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body style="padding: 10px; padding-top: .01%;">
+
+    <div class="navbar bg-base-100 shadow-sm">
+        <div class="navbar-start">
+          <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /> </svg>
+                </div>
+                <ul
+                tabindex="0"
+                class="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-64 p-4 shadow">
+                <li><a><i class="fas fa-home"></i> Homepage</a></li>
+                <li><a><i class="fas fa-book"></i> Courses</a></li>
+                <li><a><i class="fas fa-table"></i> Tables</a></li>
+                <li><a><i class="fas fa-calendar-check"></i> Attendance</a></li>
+                <li><a><i class="fas fa-tasks"></i> Assignment</a></li>
+                <li><a><i class="fas fa-file-alt"></i> Exams</a></li>
+                <li><a><i class="fas fa-book-reader"></i> Library</a></li>
+                <li><a><i class="fas fa-running"></i> Activities</a></li>
+                <li><a><i class="fas fa-calendar-alt"></i> Events</a></li>
+                <li><a><i class="fas fa-comment-dots"></i> Complains</a></li>
+              
+                <!-- Admin-only option -->
+                <li><a><i class="fas fa-user-plus"></i> Register</a></li>
+              </ul>          </div>
+        </div>
+
+        <div class="navbar-center">
+            <div class="flex-1">
+                <img src="{% static "IMG/SCMS_Logo.png" %}" alt="DaisyUI logo" class="w-10 h-10" />
+                
+            </div>
+    
+          <a class="btn btn-ghost text-xl">SCMS</a>
+          
+          <!-- put any extra links you need here ex: <a class="link link-hover">extra link</a> -->
+           
+
+        </div>
+
+        <div class="navbar-end">
+            <div class="dropdown dropdown-end">
+              <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img
+                            alt="Tailwind CSS Navbar component"
+                            src="{{ student.img.url }}" />
+                    </div>
+              </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-58 p-3 shadow">
+                  <li><a href="{% url "logout" %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+              </div>
+        </div>
+    </div>
+
+
+    
+    <div class="container" style="display:flex;margin-left:15%">
+                
+
+      <div style="justify-content:center;margin-top:20px;color:black;width:80%">
+          <table class="table">
+            <!-- head -->
+            <thead  style="color:black">
+              <tr>
+                <th></th>
+                <th></th>
+                <th>Assignment Name</th>
+                <th>Assignment Date</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- row 1 -->
+               {% for assignment in assignments  %}
+              <tr>
+                <th></th>
+
+                <th>
+                  <div class="avatar">
+                    <i class="fa-solid fa-file fa-xl w-12"> </i>
+                </div>
+                </th>
+                <td>
+                  <div class="flex items-center gap-3">
+                   
+                    <div>
+                      <div class="font-bold">{{ assignment.assignment_name }}</div>
+                      <div class="text-sm opacity-50">Third Level</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {{ assignment.date.date }}
+                  <br />
+                  <span class="badge badge-ghost badge-sm">{{ assignment.date.time }}</span>
+                </td>
+                <td>
+                  {% if  assignment.status == "Completed" %}
+                    <span class="badge badge-success">{{ assignment.status }}</span>
+                  {% else %}
+                    <span class="badge badge-error">{{ assignment.status }}</span>
+                  {% endif %}
+                </td>
+                <th>
+                  <button class="btn btn-defult btn-xl" onclick="window.location.href='{% url "assignment_page" assignment.id %}'">Open Details</button>
+                </th>
+              </tr>
+              {% endfor %}
+              <!-- row 1 end -->
+            </tbody>
+          </table>
+        </div>
+
+
+  </div>
+</div>
+
+
+    </body>
+</html>

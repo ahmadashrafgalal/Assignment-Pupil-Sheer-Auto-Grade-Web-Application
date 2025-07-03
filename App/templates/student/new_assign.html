@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com --> 
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <title>Template</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body style="padding: 10px; padding-top: .01%;">
+
+    <div class="navbar bg-base-100 shadow-sm">
+        <div class="navbar-start">
+          <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /> </svg>
+                </div>
+                <ul
+                tabindex="0"
+                class="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-64 p-4 shadow">
+                <li><a><i class="fas fa-home"></i> Homepage</a></li>
+                <li><a><i class="fas fa-book"></i> Courses</a></li>
+                <li><a><i class="fas fa-table"></i> Tables</a></li>
+                <li><a><i class="fas fa-calendar-check"></i> Attendance</a></li>
+                <li><a><i class="fas fa-tasks"></i> Assignment</a></li>
+                <li><a><i class="fas fa-file-alt"></i> Exams</a></li>
+                <li><a><i class="fas fa-book-reader"></i> Library</a></li>
+                <li><a><i class="fas fa-running"></i> Activities</a></li>
+                <li><a><i class="fas fa-calendar-alt"></i> Events</a></li>
+                <li><a><i class="fas fa-comment-dots"></i> Complains</a></li>
+              
+                <!-- Admin-only option -->
+                <li><a><i class="fas fa-user-plus"></i> Register</a></li>
+              </ul>          </div>
+        </div>
+
+        <div class="navbar-center">
+            <div class="flex-1">
+                <img src="{% static "IMG/SCMS_Logo.png" %}" alt="DaisyUI logo" class="w-10 h-10" />
+                
+            </div>
+    
+          <a class="btn btn-ghost text-xl">SCMS</a>
+          
+          <!-- put any extra links you need here ex: <a class="link link-hover">extra link</a> -->
+           
+
+        </div>
+
+        <div class="navbar-end">
+            <div class="dropdown dropdown-end">
+              <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img
+                            alt="Tailwind CSS Navbar component"
+                            src="{{ student.img.url }}" />
+                    </div>
+              </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-58 p-3 shadow">
+                  <li><a href="{% url "logout" %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+              </div>
+        </div>
+    </div>
+
+
+    
+    <div class="container" style="display:flex;justify-content:center">
+        <div class="left" style="width:100%;height:100%;padding:20px;padding-top:5px;">
+            <h1 class="text-black" style="font-size:25px;margin:10px;"><span style="font-weight:bolder"> <i class="fa-solid fa-file fa-xl"></i>  Assignment Title : </span> {{ assignment.assignment_name }}<div class="badge badge-accent badge-outline" style="padding:15px;margin-left:20px">Dr/ {{ instructor.user.username }}</div>{% if assignment.status == "NotCompleted" %}<div class="badge badge-error badge-outline" style="padding:15px;margin-left:20px">Uncompleted</div> {% else %}  <div class="badge badge-success badge-outline" style="padding:15px;margin-left:20px">completed</div>{% endif %} </h1>    
+            <div style="display:flex;justify-content:space-between">
+                <div>
+                    <h1 class="text-black" style="font-size:18px;margin:10px;"><span style="font-weight:bolder">Assignment Date : </span>{{ assignment.date.date }}  </h1>
+                </div>
+                {% if assignment.status == "NotCompleted" %}
+                    <div>
+                        <a class="btn btn-warning" href="{% url "download_pupil_sheet" %}" >Download Pupil Sheet</a>
+                        <button class="btn btn-success"  onclick="my_modal_1.showModal()"  >Upload Your Solve</button>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="iframe" style="width:100%;height:100%;margin-top:20px">
+                <iframe src="{{ assignment.assignment_file.url }}" style="width:100%;height:700px; border: none;border-radius:20px;"></iframe>
+            </div>
+        </div> 
+      </div>
+  </div>
+
+
+  <dialog id="my_modal_1" class="modal">
+    <div class="modal-box">
+        <h3 class="text-lg font-bold">Upload Solve for First Assignment</h3>
+        <form name="solve_form" method="POST" style="margin:20px" enctype="multipart/form-data" >
+            {% csrf_token %} 
+            <input name="file_input" type="file" class="file-input file-input-bordered w-full max-w-xs" required />
+            <button class="btn" type="submit">Upload</button>
+        </form>
+    <div class="modal-action">
+        <form method="dialog">
+          <button class="btn">Close</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+
+
+    </body>
+</html>

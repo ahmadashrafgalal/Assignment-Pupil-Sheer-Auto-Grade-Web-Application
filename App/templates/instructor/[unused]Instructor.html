@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "CSS/Student.css" %}">
+    <link rel="stylesheet" href="{% static "CSS/tailwind.css" %}">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.17/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="icon" href="static/IMG/alla.png" type="image/x-icon">
+    <title>Dashboare</title>
+</head>
+<body>
+    <div class="con">
+        <div class="top" style="right:20px;margin-top:20px">
+            <div class="header">
+                <div class="avatar" style="margin-left:50px">
+                    <div class="w-20 mask mask-squircle">
+                      <img src="{{ instructor.img.url }}" style="margin-top:20px;"/>
+                    </div>
+                  </div>
+                <h1 id="name"><span style="font-weight: bolder;">Hello,</span> {{ instructor.user.username }}<div class="badge badge-secondary" style="position: absolute;top:40px;margin-left:0px;">Instructor</div></h1>
+            </div>
+        
+            <div class="container" style="display:flex">
+                {% for course in courses %}
+                    <div class="card w-80 shadow-xl" style="color:black !important">
+                        <figure ><img src="{{ course.course.img}}" alt="Shoes" style="border-top-right-radius:15px ;width:100%"/></figure>
+                        <div class="card-body">
+                            <h2 class="card-title">
+                                {{ course.course.course_name}}
+                            </h2>
+                            <div class="badge badge-secondary badge-outline">{{ course.course.course_code }}</div> 
+                            <div class="card-actions justify-end">
+                                <button class="btn btn-primary text-white" onclick="window.location.href='{% url "course_page" course.course.id %}'">
+                                    Assignments
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+          </div>
+          <div class="back">
+        </div>
+    </div>
+</body>
+</html>

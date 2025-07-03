@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "CSS/Student.css" %}">
+    <link rel="stylesheet" href="{% static "CSS/tailwind.css" %}">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.17/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="icon" href="static/IMG/alla.png" type="image/x-icon">
+    <title>Dashboare</title>
+</head>
+<body>
+    <div class="con">
+        <div class="top" style="right:20px;margin-top:20px;">
+            <div class="header">
+                <div class="avatar" style="margin-left:50px">
+                    <div class="w-20 mask mask-squircle">
+                      <img src="{{ instructor.img.url }}" style="margin-top:20px;"/>
+                    </div>
+                </div>
+                <h1 id="name"><span style="font-weight: bolder;">Hello,</span> {{ instructor.user.username }} <div class="badge badge-secondary" style="position: absolute;top:40px;margin-left:0px;">Instructor</div></h1>
+            </div>
+
+                
+                <div class="card card-side shadow-xl" style="margin-top:170px;margin-left:25%;margin-bottom:10px;width: 50%;color:black">
+                  <figure>
+                    <img
+                      src="{{ course.img.url }}"
+                      alt="Movie" />
+                  </figure>
+                  <div class="card-body">
+                    <h1 class="title " style="font-size:xx-large;margin-bottom:-5px;color:black "><i class="fa-solid fa-book fa-xl color:black" > </i> {{ course.course_name}}</h1>
+                    <div class="badge badge-secondary badge-outline">{{ course.course_code }}</div> 
+                  </div>
+                </div>
+
+
+
+
+
+
+              
+
+                <div class="breadcrumbs text-sm" style="color:black;margin-left:10%;font-size:x-large;margin-top:40px">
+                  <ul>
+                    <li>
+                      <a onclick="window.location.href='{% url "course_page" course.id %}'" style="color:black">
+                        📑 Assignments  
+                      </a>
+                    </li>
+                    <li>
+                      <span class="inline-flex items-center gap-2">
+                        📄 {{assignment.assignment_name}}
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+
+
+
+
+
+
+                <div style="width:75%;justify-content:center;margin-left:10%;margin-top:10px;color:black">
+                  <table class="table">
+                    <!-- head -->
+                    <thead  style="color:black">
+                      <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Students ( {{assignment.count}} )</th>
+                        <th>Upload Time</th>
+                        <th>Grade</th>
+                        <th>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for student in student_assignments %}
+                      <!-- row 1 -->
+                      <tr>
+                        <th></th>
+
+                        <th>
+                          <div class="avatar">
+                            <i class="fa-solid fa-person fa-xl w-12"> </i>
+                        </div>
+                        </th>
+                        <td>
+                          <div class="flex items-center gap-3">
+                           
+                            <div>
+                              <div class="font-bold">{{ student.student.user.username }}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          {{ assignment.date.date }}
+                          <br />
+                          <span class="badge badge-ghost badge-sm">{{ assignment.date.time }}</span>
+                        </td>
+                        <td>{{ student.grade }}/{{ assignment.questions_count }}</td>
+                        <th>
+                          <button class="btn btn-ghost btn-xs" onclick="my_modal_{{student.student.user.id}}.showModal()" >See Pupil Sheet</button>
+                        </th>
+                      </tr>
+                      <!-- row 1 end -->
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="back">
+        </div>
+    </div>
+
+
+    <!-- Open the modal using ID.showModal() method -->
+    {% for student in student_assignments %}
+        <dialog id="my_modal_{{student.student.user.id}}" class="modal">
+          <div class="modal-box">
+            <h3 class="text-lg font-bold">{{student.student.user.username}}  <span style="color:pink"> >> {{ assignment.assignment_name }}</span></h3>
+            <img src="{{student.student_assignment_file.url}}" alt="Avatar Tailwind CSS Component" style="margin-top:20px" />
+            <div class="modal-action">
+              <form method="dialog">
+                <button class="btn">Close</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+    {% endfor %}
+</body>
+</html>

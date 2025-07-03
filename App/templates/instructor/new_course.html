@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com --> 
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    <title>Template</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body style="padding: 10px; padding-top: .01%;">
+
+    <div class="navbar bg-base-100 shadow-sm">
+        <div class="navbar-start">
+          <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /> </svg>
+                </div>
+                <ul
+                tabindex="0"
+                class="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-64 p-4 shadow">
+                <li><a><i class="fas fa-home"></i> Homepage</a></li>
+                <li><a><i class="fas fa-book"></i> Courses</a></li>
+                <li><a><i class="fas fa-table"></i> Tables</a></li>
+                <li><a><i class="fas fa-calendar-check"></i> Attendance</a></li>
+                <li><a><i class="fas fa-tasks"></i> Assignment</a></li>
+                <li><a><i class="fas fa-file-alt"></i> Exams</a></li>
+                <li><a><i class="fas fa-book-reader"></i> Library</a></li>
+                <li><a><i class="fas fa-running"></i> Activities</a></li>
+                <li><a><i class="fas fa-calendar-alt"></i> Events</a></li>
+                <li><a><i class="fas fa-comment-dots"></i> Complains</a></li>
+              
+                <!-- Admin-only option -->
+                <li><a><i class="fas fa-user-plus"></i> Register</a></li>
+              </ul>          </div>
+        </div>
+
+        <div class="navbar-center">
+            <div class="flex-1">
+                <img src="{% static "IMG/SCMS_Logo.png" %}" alt="DaisyUI logo" class="w-10 h-10" />
+                
+            </div>
+    
+          <a class="btn btn-ghost text-xl">SCMS</a>
+          
+          <!-- put any extra links you need here ex: <a class="link link-hover">extra link</a> -->
+        
+        </div>
+
+        <div class="navbar-end">
+            <div class="dropdown dropdown-end">
+              <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img
+                            alt="Tailwind CSS Navbar component"
+                            src="{{ instructor.img.url }}" />
+                    </div>
+              </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-58 p-3 shadow">
+                  <li><a href="{% url "logout" %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+              </div>
+        </div>
+    </div>
+
+
+    <div class="container" style="margin-left: 50px;">
+{% comment %} 
+      <div class="card-body bg-gray-100" style="margin-top:50px;margin-left:25%;margin-bottom:10px;width: 50%;color:black">
+        <h4 class="card-title">{{ course.course_name}}</h4>
+        <div class="badge badge-secondary badge-outline">{{ course.course_code }}</div> 
+        <p class="text-primary">Second Year</p>
+
+     </div> {% endcomment %}
+     <div class="card card-side shadow-xl" style="margin-top:50px;margin-left:25%;margin-bottom:10px;width: 50%;color:black">
+      <figure>
+        <img
+          src="{{ course.img.url }}"
+          alt="Movie" />
+      </figure>
+      <div class="card-body">
+        <h1 class="title " style="font-size:xx-large;margin-bottom:-5px;color:black "><i class="fa-solid fa-book fa-xl color:black" > </i> {{ course.course_name}}</h1>
+        <div class="badge badge-secondary badge-outline">{{ course.course_code }}</div> 
+      </div>
+    </div>
+
+
+
+
+
+      <div style="color:black;font-size:xx-large;margin-left:10%;margin-top:40px">
+          <h1>📑 Assignments</h2>
+      </div>
+
+
+      <div style="width:75%;justify-content:center;margin-left:10%;margin-top:10px;color:black">
+        <table class="table">
+          <!-- head -->
+          <thead  style="color:black">
+            <tr>
+              <th></th>
+              <th></th>
+              <th>Assignment Name</th>
+              <th>Assignment Date</th>
+              <th>Uploads Count</th>
+              <th>
+                <button class="btn btn-warning" onclick="upload_model.showModal()" >Upload Assignment</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for assignment in assignments %}
+              <!-- row 1 -->
+
+              <tr>
+                <th></th>
+
+                <th>
+                  <div class="avatar">
+                    <i class="fa-solid fa-file fa-xl w-12"> </i>
+                </div>
+                </th>
+                <td>
+                  <div class="flex items-center gap-3">
+                  
+                    <div>
+                      <div class="font-bold">{{ assignment.assignment_name }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {{ assignment.date.date }}
+                  <br />
+                  <span class="badge badge-ghost badge-sm">{{ assignment.date.time }}</span>
+                </td>
+                <td>{{ assignment.uploads }}</td>
+                <th>
+                  <button class="btn btn-ghost btn-xs" onclick="window.location.href='{% url "Instructor_assignment_page" assignment.id %}'">See Uploads</button>
+                  <button class="btn btn-warning btn-xs" onclick="my_modal_{{ assignment.id }}.showModal()" >See Answers</button>
+                </th>
+              </tr>
+              <!-- row 1 end -->
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+  </div>
+</div>
+<div class="back">
+</div>
+</div>
+
+
+
+<dialog id="upload_model" class="modal">
+<div class="modal-box">
+<h3 class="text-lg font-bold">Upload Assignment</h3>
+<form method="POST" style="margin:20px" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div>
+    <label for="file" class="label">Assignment Name</label>
+    <input name="assignment_name" style="margin:10px" type="text" placeholder="Assignment Name" class="input input-bordered input-primary w-full " />
+
+    <label for="file" class="label">Questions Count</label>
+    <input name="question_count" style="margin:10px" type="text" placeholder="Questions Count" class="input input-bordered input-primary w-full" />
+
+    <label for="file" class="label">Upload Assignment</label>
+    <input name="assignment_file" style="margin:10px" type="file" class="file-input file-input-bordered w-full " name="file"/>
+
+    <label for="image" class="label">Upload Pupil</label>
+    <input name="assignment_pupil" style="margin:10px" type="file" class="file-input file-input-bordered w-full " name="image"/>
+    
+  </div>
+  <div>
+    <button class="btn btn-info" method="submit" style="width:50%;margin-left:25%;margin-right:25%">submit</button>
+  </div>
+
+</form>
+<div class="modal-action">
+<form method="dialog">
+  <button class="btn">Close</button>
+</form>
+</div>
+</div>
+</dialog>
+
+
+
+{% for assignment in assignments %}
+<dialog id="my_modal_{{ assignment.id }}" class="modal">  
+<div class="modal-box">    
+  <h3 class="text-lg font-bold">
+      {{ assignment.assignment_name }}
+  </h3>    
+  <img src="{{ assignment.pupil_sheet.url }}" alt="Avatar Tailwind CSS Component" style="margin-top:20px" />   
+
+  <!-- Form to submit the answers -->
+  <form method="POST" name="answer_form" >
+    {% csrf_token %}
+    <div class="grid grid-cols-4 gap-4 mt-4">
+        {% for answer in assignment.answers %}
+            <label class="input input-bordered flex items-center w-24"> 
+                {{ answer.question_number }}:
+                <input type="text" name="{{ answer.question_number }}" value="{{ answer.question_answer }}" /> 
+            </label> 
+        {% endfor %}
+      </div>  
+      <input type="hidden" name="assignment_id" value="{{ assignment.id }}">
+    <button class="btn btn-info" type="submit" style="width:50%; margin-left:25%; margin-right:25%" name="answer_form_submit" value="true">Submit</button>   
+</form>
+
+  <div class="modal-action">       
+      <form method="dialog">         
+          <button class="btn">Close</button>       
+      </form>     
+  </div>   
+</div> 
+</dialog>
+{% endfor %}
+</div>
+
+
+
+
+    </body>
+</html>

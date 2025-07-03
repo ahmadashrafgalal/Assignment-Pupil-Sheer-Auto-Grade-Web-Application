@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "CSS/Student.css" %}">
+    <link rel="stylesheet" href="{% static "CSS/tailwind.css" %}">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.17/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="icon" href="static/IMG/alla.png" type="image/x-icon">
+    <title>Dashboare</title>
+</head>
+<body>
+    <div class="con">
+        <div class="top" style="right:20px;margin-top:20px;">
+            <div class="header">
+                <div class="avatar" style="margin-left:50px">
+                    <div class="w-20 mask mask-squircle">
+                      <img src="{{ instructor.img.url }}" style="margin-top:20px;"/>
+                    </div>
+                </div>
+                <h1 id="name"><span style="font-weight: bolder;">Hello,</span> {{ instructor.user.username }} <div class="badge badge-secondary" style="position: absolute;top:40px;margin-left:0px;">Instructor</div></h1>
+            </div>
+
+                
+                <div class="card card-side shadow-xl" style="margin-top:170px;margin-left:25%;margin-bottom:10px;width: 50%;color:black">
+                  <figure>
+                    <img
+                      src="{{ course.img.url }}"
+                      alt="Movie" />
+                  </figure>
+                  <div class="card-body">
+                    <h1 class="title " style="font-size:xx-large;margin-bottom:-5px;color:black "><i class="fa-solid fa-book fa-xl color:black" > </i> {{ course.course_name}}</h1>
+                    <div class="badge badge-secondary badge-outline">{{ course.course_code }}</div> 
+                  </div>
+                </div>
+
+
+
+
+
+
+                
+
+                <div style="color:black;font-size:xx-large;margin-left:10%;margin-top:40px">
+                    <h1>📑 Assignments</h2>
+                </div>
+
+
+
+
+
+
+                <div style="width:75%;justify-content:center;margin-left:10%;margin-top:10px;color:black">
+                  <table class="table">
+                    <!-- head -->
+                    <thead  style="color:black">
+                      <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Assignment Name</th>
+                        <th>Assignment Date</th>
+                        <th>Uploads Count</th>
+                        <th>
+                          <button class="btn btn-warning" onclick="upload_model.showModal()" >Upload Assignment</button>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for assignment in assignments %}
+                        <!-- row 1 -->
+
+                        <tr>
+                          <th></th>
+
+                          <th>
+                            <div class="avatar">
+                              <i class="fa-solid fa-file fa-xl w-12"> </i>
+                          </div>
+                          </th>
+                          <td>
+                            <div class="flex items-center gap-3">
+                            
+                              <div>
+                                <div class="font-bold">{{ assignment.assignment_name }}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            {{ assignment.date.date }}
+                            <br />
+                            <span class="badge badge-ghost badge-sm">{{ assignment.date.time }}</span>
+                          </td>
+                          <td>{{ assignment.uploads }}</td>
+                          <th>
+                            <button class="btn btn-ghost btn-xs" onclick="window.location.href='{% url "Instructor_assignment_page" assignment.id %}'">See Uploads</button>
+                            <button class="btn btn-warning btn-xs" onclick="my_modal_{{ assignment.id }}.showModal()" >See Answers</button>
+                          </th>
+                        </tr>
+                        <!-- row 1 end -->
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="back">
+        </div>
+    </div>
+
+
+
+    <dialog id="upload_model" class="modal">
+      <div class="modal-box">
+          <h3 class="text-lg font-bold">Upload Assignment</h3>
+          <form method="POST" style="margin:20px" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+              <label for="file" class="label">Assignment Name</label>
+              <input name="assignment_name" style="margin:10px" type="text" placeholder="Assignment Name" class="input input-bordered input-primary w-full " />
+
+              <label for="file" class="label">Questions Count</label>
+              <input name="question_count" style="margin:10px" type="text" placeholder="Questions Count" class="input input-bordered input-primary w-full" />
+
+              <label for="file" class="label">Upload Assignment</label>
+              <input name="assignment_file" style="margin:10px" type="file" class="file-input file-input-bordered w-full " name="file"/>
+
+              <label for="image" class="label">Upload Pupil</label>
+              <input name="assignment_pupil" style="margin:10px" type="file" class="file-input file-input-bordered w-full " name="image"/>
+              
+            </div>
+            <div>
+              <button class="btn btn-info" method="submit" style="width:50%;margin-left:25%;margin-right:25%">submit</button>
+            </div>
+
+          </form>
+      <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
+
+
+    {% for assignment in assignments %}
+    <dialog id="my_modal_{{ assignment.id }}" class="modal">  
+        <div class="modal-box">    
+            <h3 class="text-lg font-bold">
+                {{ assignment.assignment_name }}
+            </h3>    
+            <img src="{{ assignment.pupil_sheet.url }}" alt="Avatar Tailwind CSS Component" style="margin-top:20px" />   
+
+            <!-- Form to submit the answers -->
+            <form method="POST" name="answer_form" >
+              {% csrf_token %}
+              <div class="grid grid-cols-4 gap-4 mt-4">
+                  {% for answer in assignment.answers %}
+                      <label class="input input-bordered flex items-center w-24"> 
+                          {{ answer.question_number }}:
+                          <input type="text" name="{{ answer.question_number }}" value="{{ answer.question_answer }}" /> 
+                      </label> 
+                  {% endfor %}
+                </div>  
+                <input type="hidden" name="assignment_id" value="{{ assignment.id }}">
+              <button class="btn btn-info" type="submit" style="width:50%; margin-left:25%; margin-right:25%" name="answer_form_submit" value="true">Submit</button>   
+          </form>
+
+            <div class="modal-action">       
+                <form method="dialog">         
+                    <button class="btn">Close</button>       
+                </form>     
+            </div>   
+        </div> 
+    </dialog>
+{% endfor %}
+
+        
+
+</body>
+</html>

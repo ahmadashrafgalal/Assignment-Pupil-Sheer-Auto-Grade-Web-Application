@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "CSS/Student.css" %}">
+    <link rel="stylesheet" href="{% static "CSS/tailwind.css" %}">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.17/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="icon" href="static/IMG/alla.png" type="image/x-icon">
+    <title>Dashboare</title>
+</head>
+<body>
+    <div class="con">
+        <div class="top" style="right:20px;margin-top:20px">
+            <div class="header">
+                <div class="avatar" style="margin-left:50px">
+                    <div class="w-20 mask mask-squircle">
+                      <img src="{{ student.img.url }}" style="margin-top:20px;"/>
+                    </div>
+                  </div>
+                <h1 id="name"><span style="font-weight: bolder;">Hello,</span>{{ student.user.username }}<div class="badge badge-primary" style="position: absolute;top:40px;margin-left:0px;">Student</div></h1>
+            </div>
+            
+            <div class="container" style="display:flex">
+                <div class="left" style="width:70%;height:100%;padding:20px;padding-top:5px;">
+                    <h1 class="text-black" style="font-size:25px;margin:10px;"><span style="font-weight:bolder"> <i class="fa-solid fa-file fa-xl"></i>  Assignment Title : </span> {{ assignment.assignment_name }}<div class="badge badge-accent badge-outline" style="padding:15px;margin-left:20px">Dr/ {{ instructor.user.username }}</div>{% if assignment.status == "NotCompleted" %}<div class="badge badge-error badge-outline" style="padding:15px;margin-left:20px">Uncompleted</div> {% else %}  <div class="badge badge-success badge-outline" style="padding:15px;margin-left:20px">completed</div>{% endif %} </h1>    
+                    <div style="display:flex;justify-content:space-between">
+                        <div>
+                            <h1 class="text-black" style="font-size:18px;margin:10px;"><span style="font-weight:bolder">Assignment Date : </span>{{ assignment.date.date }}  </h1>
+                        </div>
+                        {% if assignment.status == "NotCompleted" %}
+                            <div>
+                                <a class="btn btn-warning" href="{% url "download_pupil_sheet" %}" >Download Pupil Sheet</a>
+                                <button class="btn btn-success"  onclick="my_modal_1.showModal()"  >Upload Your Solve</button>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="iframe" style="width:100%;height:100%;margin-top:20px">
+                        <iframe src="{{ assignment.assignment_file.url }}" style="width:100%;height:700px; border: none;border-radius:20px;"></iframe>
+                    </div>
+                </div> 
+              </div>
+          </div>
+          <div class="back">
+        </div>
+    </div>
+
+
+    <dialog id="my_modal_1" class="modal">
+        <div class="modal-box">
+            <h3 class="text-lg font-bold">Upload Solve for First Assignment</h3>
+            <form name="solve_form" method="POST" style="margin:20px" enctype="multipart/form-data" >
+                {% csrf_token %} 
+                <input name="file_input" type="file" class="file-input file-input-bordered w-full max-w-xs" required />
+                <button class="btn" type="submit">Upload</button>
+            </form>
+        <div class="modal-action">
+            <form method="dialog">
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+
+</body>
+</html>

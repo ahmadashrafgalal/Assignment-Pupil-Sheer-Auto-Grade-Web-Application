@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
+}
+
+.con {
+    position: relative;
+    height: 100vh; /* Adjust the height as needed */
+    overflow: hidden;
+}
+
+.back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #5840ba;
+    z-index: 1;
+}
+
+.top {
+    position: absolute;
+    width: 97.5%;
+    height: 96%;
+    background-color: #fff;
+    z-index: 10;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+}
+.top::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+.header{
+    display: flex;
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    width: 97.5%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    height: 120px;
+}
+#name{
+    color: black;
+    font-weight: 500px;
+    font-size: xx-large;
+    padding: 50px;
+}
+.stats{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+}
+.container{
+    display: flex;
+    flex-wrap:wrap;
+    margin-top: 150px;
+    justify-content: center;
+}
+.card{
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+.chat-bubble{
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.modal-box::-webkit-scrollbar{
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+
+}
+.logout:hover{
+    cursor: pointer;
+}
+.fa-pen:hover{
+    cursor: pointer;
+    
+}
+
+.comments::-webkit-scrollbar{
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+.b_for_add:hover{
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 8px;
+}
+.alt{
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 20px 50px 20px 50px;
+    width: auto ;
+    color: black !important;
+    justify-content: center;
+    align-items: center;
+}

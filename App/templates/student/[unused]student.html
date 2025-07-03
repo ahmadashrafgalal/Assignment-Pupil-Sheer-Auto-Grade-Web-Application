@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "CSS/Student.css" %}">
+    <link rel="stylesheet" href="{% static "CSS/tailwind.css" %}">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.17/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="icon" href="static/IMG/alla.png" type="image/x-icon">
+    <title>Dashboare</title>
+</head>
+<body>
+    <div class="con">
+        <div class="top" style="right:20px;margin-top:20px">
+            <div class="header">
+                <div class="avatar" style="margin-left:50px">
+                    <div class="w-20 mask mask-squircle">
+                      <img src="{{ student.img }}" style="margin-top:20px;"/>
+                    </div>
+                  </div>
+                <h1 id="name"><span style="font-weight: bolder;">Hello,</span>{{ student.user.username }}<div class="badge badge-primary" style="position: absolute;top:40px;margin-left:0px;">Student</div></h1>
+            </div>
+        
+            <div class="container" style="display:flex">
+                
+
+                <div style="width:75%;justify-content:center;margin-left:10%;margin-top:10px;color:black">
+                    <table class="table">
+                      <!-- head -->
+                      <thead  style="color:black">
+                        <tr>
+                          <th></th>
+                          <th></th>
+                          <th>Assignment Name</th>
+                          <th>Assignment Date</th>
+                          <th>Status</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- row 1 -->
+                         {% for assignment in assignments  %}
+                        <tr>
+                          <th></th>
+  
+                          <th>
+                            <div class="avatar">
+                              <i class="fa-solid fa-file fa-xl w-12"> </i>
+                          </div>
+                          </th>
+                          <td>
+                            <div class="flex items-center gap-3">
+                             
+                              <div>
+                                <div class="font-bold">{{ assignment.assignment_name }}</div>
+                                <div class="text-sm opacity-50">Third Level</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            {{ assignment.date.date }}
+                            <br />
+                            <span class="badge badge-ghost badge-sm">{{ assignment.date.time }}</span>
+                          </td>
+                          <td>
+                            {% if  assignment.status == "Completed" %}
+                              <span class="badge badge-success">{{ assignment.status }}</span>
+                            {% else %}
+                              <span class="badge badge-error">{{ assignment.status }}</span>
+                            {% endif %}
+                          </td>
+                          <th>
+                            <button class="btn btn-defult btn-xl" onclick="window.location.href='{% url "assignment_page" assignment.id %}'">Open Details</button>
+                          </th>
+                        </tr>
+                        {% endfor %}
+                        <!-- row 1 end -->
+                      </tbody>
+                    </table>
+                  </div>
+
+
+            </div>
+          </div>
+          <div class="back">
+        </div>
+    </div>
+</body>
+</html>
